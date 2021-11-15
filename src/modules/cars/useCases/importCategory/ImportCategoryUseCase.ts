@@ -1,16 +1,14 @@
 import csvParse from "csv-parse";
 import fs from "fs";
 
-import { Category } from "../../model/Category";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
-import { CreateCategoryUseCase } from "../createCategory/CreateCategoryUseCase";
 
 interface IImportCategory {
   name: string;
   description: string;
 }
 class ImportCategoryUseCase {
-  constructor(private createCategoryUseCase: CreateCategoryUseCase) {}
+  constructor(private categoriesRepository: ICategoriesRepository) {}
 
   loadCategories(file: Express.Multer.File): Promise<IImportCategory[]> {
     return new Promise((resolve, reject) => {
@@ -42,7 +40,7 @@ class ImportCategoryUseCase {
 
     categories.map((category) => {
       const { name, description } = category;
-      this.createCategoryUseCase.execute({ name, description });
+      this.categoriesRepository.create({ name, description });
     });
   }
 }
