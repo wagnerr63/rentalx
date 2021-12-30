@@ -1,8 +1,9 @@
 import { hash } from "bcrypt";
 import { injectable, inject } from "tsyringe";
 
+import { User } from "@modules/accounts/infra/typeorm/entities/User";
+
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
-import { User } from "../../entities/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 @injectable()
