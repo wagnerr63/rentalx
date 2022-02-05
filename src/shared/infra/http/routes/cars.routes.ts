@@ -1,11 +1,19 @@
-import {Router} from "express";
+import { Router } from "express";
 
 import { CreateCarController } from "@modules/cars/useCases/createCar/CreateCarController";
+
+import { ensureAdmin } from "../middlewares/ensureAdmin";
+import { ensureAuthentication } from "../middlewares/ensureAuthenticated";
 
 const carsRoutes = Router();
 
 const createCarController = new CreateCarController();
 
-carsRoutes.post("/", createCarController.handle);
+carsRoutes.post(
+  "/",
+  ensureAuthentication,
+  ensureAdmin,
+  createCarController.handle
+);
 
 export { carsRoutes };
